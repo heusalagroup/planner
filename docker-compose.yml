@@ -9,27 +9,27 @@ x-dbconfig_planner_env: &dbconfig_planner_env
 
 services:
 
-  planner-db:
-    container_name: planner-db
-    image: postgres:14
-    environment:
-      POSTGRES_USER: *planner_dbuser
-      POSTGRES_DB: *planner_dbname
-      POSTGRES_PASSWORD: *planner_dbpass # pragma: allowlist secret
-      LC_COLLATE: "C.UTF-8"
-    ports:
-    - target: *planner_dbport
-      published: *planner_dbport
-      protocol: tcp
-    healthcheck:
-      test: "pg_isready --dbname=$$POSTGRES_DB --username=$$POSTGRES_USER -q"
-      interval: 5s
-      timeout: 5s
-      retries: 3
-      start_period: 5s
-    volumes:
-    - './volumes/planner_db_data:/var/lib/postgresql/data'
-    - './api/database/initial-database.sql:/docker-entrypoint-initdb.d/initial-database.sql'
+#  planner-db:
+#    container_name: planner-db
+#    image: postgres:14
+#    environment:
+#      POSTGRES_USER: *planner_dbuser
+#      POSTGRES_DB: *planner_dbname
+#      POSTGRES_PASSWORD: *planner_dbpass # pragma: allowlist secret
+#      LC_COLLATE: "C.UTF-8"
+#    ports:
+#    - target: *planner_dbport
+#      published: *planner_dbport
+#      protocol: tcp
+#    healthcheck:
+#      test: "pg_isready --dbname=$$POSTGRES_DB --username=$$POSTGRES_USER -q"
+#      interval: 5s
+#      timeout: 5s
+#      retries: 3
+#      start_period: 5s
+#    volumes:
+#    - './volumes/planner_db_data:/var/lib/postgresql/data'
+#    - './api/database/initial-database.sql:/docker-entrypoint-initdb.d/initial-database.sql'
 
   planner-api:
     container_name: planner-api
@@ -53,9 +53,8 @@ services:
     - "./api/.env"
     ports:
     - "3001:3001"
-    depends_on:
-    - planner-db
-    - planner-mock-kraftwerk
+#    depends_on:
+#    - planner-db
 
   planner-frontend-image:
     container_name: planner-frontend-image
