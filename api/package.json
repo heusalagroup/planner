@@ -1,0 +1,57 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-prod": "node dist/api.js",
+    "start": "ts-node src/api.ts",
+    "build": "rollup -c"
+  },
+  "author": "",
+  "license": "AGPL",
+  "private": true,
+  "bin": {
+    "api": "dist/api.js"
+  },
+  "keywords": [
+    "typescript",
+    "backend",
+    "rest",
+    "nodejs",
+    "spring",
+    "spring-boot"
+  ],
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@azure/msal-node": "^2.3.0",
+    "@babel/cli": "^7.23.0",
+    "@babel/core": "^7.23.2",
+    "@babel/preset-env": "^7.23.2",
+    "@babel/preset-typescript": "^7.23.2",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-inject": "^5.0.5",
+    "@rollup/plugin-json": "^6.0.1",
+    "@rollup/plugin-replace": "^5.0.4",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/lodash": "^4.14.200",
+    "@types/node": "^20.8.7",
+    "lodash": "^4.17.21",
+    "rollup": "^3.29.4",
+    "rollup-plugin-uglify": "github:heusalagroup/rollup-plugin-uglify",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2",
+    "@rollup/plugin-image": "^3.0.3",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@types/jest": "^29.5.10",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/pg": "^8.10.9",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.11.3",
+    "reflect-metadata": "^0.1.13"
+  }
+}

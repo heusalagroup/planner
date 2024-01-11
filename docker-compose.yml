@@ -1,0 +1,72 @@
+version: '3.7'
+
+x-dbconfig_planner_env: &dbconfig_planner_env
+  DB_USER: &planner_dbuser planner
+  DB_DATABASE: &planner_dbname planner
+  DB_PASSWORD: &planner_dbpass plannerpwd # pragma: allowlist secret
+  DB_PORT: &planner_dbport 5432
+  DB_HOST: &planner_dbhost planner-db
+
+services:
+
+  planner-db:
+    container_name: planner-db
+    image: postgres:14
+    environment:
+      POSTGRES_USER: *planner_dbuser
+      POSTGRES_DB: *planner_dbname
+      POSTGRES_PASSWORD: *planner_dbpass # pragma: allowlist secret
+      LC_COLLATE: "C.UTF-8"
+    ports:
+    - target: *planner_dbport
+      published: *planner_dbport
+      protocol: tcp
+    healthcheck:
+      test: "pg_isready --dbname=$$POSTGRES_DB --username=$$POSTGRES_USER -q"
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    volumes:
+    - './volumes/planner_db_data:/var/lib/postgresql/data'
+    - './api/database/initial-database.sql:/docker-entrypoint-initdb.d/initial-database.sql'
+
+  planner-api:
+    container_name: planner-api
+    image: "heusalagroup/planner-api:dev"
+    restart: unless-stopped
+    build: ./api
+    environment:
+      AZURE_POSTGRESQL_HOST: *planner_dbhost
+      AZURE_POSTGRESQL_USER: *planner_dbuser
+      AZURE_POSTGRESQL_DATABASE: *planner_dbname
+      AZURE_POSTGRESQL_PORT: *planner_dbport
+#      AZURE_POSTGRESQL_SSL: *planner_ssl
+      AZURE_POSTGRESQL_PASSWORD: *planner_dbpass # pragma: allowlist secret
+      BACKEND_LOG_LEVEL: DEBUG
+      BACKEND_URL: "http://0.0.0.0:3001"
+      PUBLIC_URL: "http://localhost:3000"
+      PUBLIC_API_URL: "http://localhost:3000/api"
+    volumes:
+    - './assets:/assets'
+    env_file:
+    - "./api/.env"
+    ports:
+    - "3001:3001"
+    depends_on:
+    - planner-db
+    - planner-mock-kraftwerk
+
+  planner-frontend-image:
+    container_name: planner-frontend-image
+    restart: unless-stopped
+    image: "heusalagroup/planner-frontend:dev"
+    build:
+      context: "./frontend"
+      args:
+        DEFAULT_PUBLIC_URL: "http://localhost:3000"
+    ports:
+      - "8080:8080"
+    environment:
+      NGINX_PORT: 8080
+      NGINX_API_URL: "http://heusalagroup-backend:3500"

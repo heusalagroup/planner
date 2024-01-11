@@ -1,0 +1,23 @@
+[submodule "api/src/io/hyperify/core"]
+	path = api/src/io/hyperify/core
+	url = https://github.com/hyperifyio/io.hyperify.core.git
+	branch = main
+[submodule "api/src/io/hyperify/node"]
+	path = api/src/io/hyperify/node
+	url = https://github.com/hyperifyio/io.hyperify.node.git
+	branch = main
+[submodule "api/src/io/hyperify/pg"]
+	path = api/src/io/hyperify/pg
+	url = https://github.com/hyperifyio/io.hyperify.pg.git
+	branch = main
+[submodule "api/src/fi/hg/planner"]
+	path = api/src/fi/hg/planner
+	url = https://github.com/heusalagroup/fi.hg.planner.git
+	branch = main
+[submodule "testing/src/fi/hg/planner"]
+	path = testing/src/fi/hg/planner
+	url = https://github.com/heusalagroup/fi.hg.planner.git
+	branch = main
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/hyperifyio/frontend.git

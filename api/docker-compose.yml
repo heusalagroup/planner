@@ -1,0 +1,13 @@
+version: '3.1'
+
+services:
+
+  api-backend:
+    build: .
+    environment:
+      BACKEND_LOG_LEVEL: DEBUG
+      BACKEND_URL: "http://0.0.0.0:3001"
+    env_file:
+    - "./.env"
+    ports:
+    - "3001:3001"
